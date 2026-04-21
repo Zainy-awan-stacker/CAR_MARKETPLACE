@@ -725,3 +725,24 @@ export const myBookings = [
       "30000 to 50000",
       "50000 to 99000"
     ];
+import { LuLayoutDashboard } from "react-icons/lu";
+import { BsFillHouseAddFill } from "react-icons/bs";
+import { FaListUl } from "react-icons/fa";
+
+export const navItems = [
+  {
+    path: "/owner",
+    label: "Dashboard",
+    icon: LuLayoutDashboard
+  },
+  {
+    path: "/owner/add-car",
+    label: "Add Car",
+    icon: BsFillHouseAddFill
+  },
+  {
+    path: "/owner/list-car",
+    label: "List Car",
+    icon: FaListUl
+  }
+];

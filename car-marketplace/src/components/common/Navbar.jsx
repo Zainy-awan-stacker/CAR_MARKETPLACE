@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const Navbar = ({ menuOpened, setMenuOpened, }) => {
+const Navbar = ({ menuOpened, setMenuOpened,}) => {
 
   const navLinks = [
   { path: "/", title: "Home" },
@@ -34,7 +34,7 @@ const Navbar = ({ menuOpened, setMenuOpened, }) => {
 
       {/* Mobile Dropdown */}
       {menuOpened && (
-        <div className="absolute top-[70px] left-0 w-full bg-white shadow-md flex flex-col items-center gap-6 py-6 lg:hidden z-50">
+        <div className="absolute top-[70px] left-0  bg-white shadow-md flex flex-col items-center gap-6 py-6 lg:hidden z-50">
           {navLinks.map((link) => (
             <NavLink
               key={link.title}
