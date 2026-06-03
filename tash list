@@ -1,0 +1,15 @@
+*   [33mc1f776a[m[33m ([m[1;35mrefs/stash[m[33m)[m WIP on senior-review: b4bcf14 Update repo to monorepo structure: add frontend/backend, remove old car-marketplace, ignore node_modules and env files
+[31m|[m[32m\[m  
+[31m|[m * [33mf780fa8[m index on senior-review: b4bcf14 Update repo to monorepo structure: add frontend/backend, remove old car-marketplace, ignore node_modules and env files
+[31m|[m[31m/[m  
+[31m|[m *   [33m4a5f62e[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m Merge senior-review into main: monorepo frontend/backend update
+[31m|[m [33m|[m[31m\[m  
+[31m|[m [33m|[m[31m/[m  
+[31m|[m[31m/[m[33m|[m   
+* [33m|[m [33mb4bcf14[m[33m ([m[1;31morigin/senior-review[m[33m, [m[1;32msenior-review[m[33m)[m Update repo to monorepo structure: add frontend/backend, remove old car-marketplace, ignore node_modules and env files
+* [33m|[m [33m5a59e7d[m Remove tracked backend/node_modules and backend/.env; add root .gitignore
+* [33m|[m [33m45184cf[m Owner dashboard sidebar, responsive layout and routing updates
+* [33m|[m [33m457aa5e[m[33m ([m[1;31morigin/feature-login-form[m[33m, [m[1;32mfeature-login-form[m[33m)[m Login form updated
+[33m|[m[33m/[m  
+* [33m248ec6c[m[33m ([m[1;36mHEAD[m[33m)[m Add backend or changes in frontend in project
+* [33ma473018[m setup gitignore

@@ -1,0 +1,20 @@
+[33mb4bcf14[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32msenior-review[m[33m, [m[1;31morigin/senior-review[m[33m)[m HEAD@{0}: reset: moving to b4bcf14
+[33m45184cf[m HEAD@{1}: reset: moving to 45184cf
+[33mb4bcf14[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32msenior-review[m[33m, [m[1;31morigin/senior-review[m[33m)[m HEAD@{2}: reset: moving to HEAD
+[33mb4bcf14[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32msenior-review[m[33m, [m[1;31morigin/senior-review[m[33m)[m HEAD@{3}: checkout: moving from senior-review to senior-review
+[33mb4bcf14[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32msenior-review[m[33m, [m[1;31morigin/senior-review[m[33m)[m HEAD@{4}: checkout: moving from main to senior-review
+[33m4a5f62e[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{5}: checkout: moving from senior-review to main
+[33mb4bcf14[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32msenior-review[m[33m, [m[1;31morigin/senior-review[m[33m)[m HEAD@{6}: checkout: moving from main to senior-review
+[33m4a5f62e[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{7}: reset: moving to HEAD
+[33m4a5f62e[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{8}: reset: moving to HEAD
+[33m4a5f62e[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{9}: merge senior-review: Merge made by the 'ort' strategy.
+[33m248ec6c[m HEAD@{10}: checkout: moving from senior-review to main
+[33mb4bcf14[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32msenior-review[m[33m, [m[1;31morigin/senior-review[m[33m)[m HEAD@{11}: commit: Update repo to monorepo structure: add frontend/backend, remove old car-marketplace, ignore node_modules and env files
+[33m5a59e7d[m HEAD@{12}: commit: Remove tracked backend/node_modules and backend/.env; add root .gitignore
+[33m45184cf[m HEAD@{13}: commit: Owner dashboard sidebar, responsive layout and routing updates
+[33m457aa5e[m[33m ([m[1;31morigin/feature-login-form[m[33m, [m[1;32mfeature-login-form[m[33m)[m HEAD@{14}: checkout: moving from feature-login-form to senior-review
+[33m457aa5e[m[33m ([m[1;31morigin/feature-login-form[m[33m, [m[1;32mfeature-login-form[m[33m)[m HEAD@{15}: commit: Login form updated
+[33m248ec6c[m HEAD@{16}: checkout: moving from main to feature-login-form
+[33m248ec6c[m HEAD@{17}: Branch: renamed refs/heads/master to refs/heads/main
+[33m248ec6c[m HEAD@{19}: commit: Add backend or changes in frontend in project
+[33ma473018[m HEAD@{20}: commit (initial): setup gitignore

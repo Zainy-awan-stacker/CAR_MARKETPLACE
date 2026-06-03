@@ -60,7 +60,7 @@ function Login({setUser}) {
                 required
              />
         </div>
-        <button className='bg-blue-500 w-full p-3 mt-5 rounded-md text-2xl text-white cursor-pointer'>Login</button>
+        <button className='bg-blue-500 w-full p-3 mt-5 rounded-md text-2xl text-white cursor-pointer'>dddd</button>
      </form>
     </div>
     </div>
