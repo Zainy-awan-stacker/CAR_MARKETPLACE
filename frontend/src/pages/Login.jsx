@@ -38,19 +38,6 @@ function Login({ setUser }) {
               email
             </label>
             <input
-<<<<<<< Updated upstream
-             type="password"
-             name="password"
-             value={formData.password}
-             onChange={handleChange}
-             className='w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-200 outline-none'
-                placeholder="enter your password"
-                required
-             />
-        </div>
-        <button className='bg-blue-500 w-full p-3 mt-5 rounded-md text-2xl text-white cursor-pointer'>dddd</button>
-     </form>
-=======
               type="email"
               name="email"
               value={formData.email}
@@ -80,7 +67,6 @@ function Login({ setUser }) {
           </button>
         </form>
       </div>
->>>>>>> Stashed changes
     </div>
   );
 }
