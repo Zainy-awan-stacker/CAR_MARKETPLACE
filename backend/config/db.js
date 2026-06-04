@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import dns from "node:dns";
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
-const DEFAULT_MONGO_URI = "mongodb://127.0.0.1:27017/frontend";
+const DEFAULT_MONGO_URI = "mongodb://127.0.0.1:27017/car_marketplace";
 
 export const connectDb = async () => {
   const mongoUri = process.env.MONGO_URI || DEFAULT_MONGO_URI;

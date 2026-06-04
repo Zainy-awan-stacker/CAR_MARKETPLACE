@@ -3,7 +3,7 @@ import User from "../model/User.js";
 import { protect } from "../middleware/auth.middleware.js";
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET || "supersecretlocaljwtkey";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 //generate token
 const generateToken = (id) => {
@@ -32,7 +32,7 @@ router.post("/register", async (req, res) => {
     const user = await User.create({ username, email, password });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
+      expiresIn: "3d",
     });
 
     res.status(200).json({
@@ -42,7 +42,7 @@ router.post("/register", async (req, res) => {
       token,
     });
   } catch (error) {
-    console.log("ERROR:", error); // 🔥 must
+    console.log("ERROR:", error); 
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -62,9 +62,11 @@ router.post("/login", async (req, res) => {
     }
     const token = generateToken(user._id);
     res.status(200).json({
-      id: user._id,
-      username: user.username,
-      email: user.email,
+      user:{
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      },
       token,
     });
   } catch (error) {

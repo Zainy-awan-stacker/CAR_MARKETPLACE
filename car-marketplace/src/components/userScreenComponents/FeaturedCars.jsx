@@ -1,20 +1,40 @@
-import React from "react";
+import React, { useEffect,useState} from "react";
 import Item from "./Item";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Autoplay } from "swiper/modules";
-import { Cars } from "../../data";
 import { useNavigate } from "react-router-dom";
+import API from "../../api/api";
 
 function FeaturedCars() {
   const navigate = useNavigate()
-  const handleMoveTo =()=>{
-     navigate(`/listing/${Cars.id}`);
+  const [cars,setCars] =useState([]);
+  
+  const handleHoverTo =()=>{
+    navigate("/listing")
   }
 
-  const handleHoverTo = ()=>{
-        navigate('/listing')
-  }
+  useEffect(() => {
+
+  const fetchCars = async () => {
+
+    try {
+
+      const res = await API.get("/cars");
+
+      setCars(res.data.cars || res.data);
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+
+  fetchCars();
+
+}, []);
 
   return (
     <section className="third-container py-16 px-15">
@@ -25,18 +45,18 @@ function FeaturedCars() {
             Your Next Car Awaits
           </h4>
         </div>
-        <div className="inside-heading flex xl:justify-between items-center pb-5">
-          <div className="inerr-side flex-5">
-            <h1>Start Driving With Ease</h1>
-          </div>
-          <div className="inner-2-side flex-3">
-            <p className="para-side font-bold text-gray-400 font-san-serif">
-              Find reliable car with transparent pricing, verified inspections,
-              flexible pickup and delivery options, and 24/7 customer support
-              for a smooth rental or buying experience.
-            </p>
-          </div>
-        </div>
+        <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center pb-5 gap-4">
+  <div className="flex-[5]">
+    <h1>Start Driving With Ease</h1>
+  </div>
+  <div className="flex-[3]">
+    <p className="font-bold text-gray-400">
+      Find reliable car with transparent pricing, verified inspections,
+      flexible pickup and delivery options, and 24/7 customer support
+      for a smooth rental or buying experience.
+    </p>
+  </div>
+</div>
         <div className="scnd-heading flex justify-between mt-4">
           <div>
             <h5>
@@ -73,8 +93,8 @@ function FeaturedCars() {
           1024: { slidesPerView: 4 },
         }}
       >
-        {Cars.map((car) => (
-          <SwiperSlide key={Cars.id} onClick={handleMoveTo} className="click cursor-pointer">
+        {cars.map((car) => (
+          <SwiperSlide key={car._id}  className="click cursor-pointer">
             <Item car={car}/>
           </SwiperSlide>
         ))}
