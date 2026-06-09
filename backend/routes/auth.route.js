@@ -3,16 +3,18 @@ import User from "../model/User.js";
 import { protect } from "../middleware/auth.middleware.js";
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET;
+// const JWT_SECRET = process.env.JWT_SECRET;
+// console.log("JWT_SECRET =", JWT_SECRET);
 
 //generate token
 const generateToken = (id) => {
-  if (!process.env.JWT_SECRET) {
-    console.warn(
-      "Warning: JWT_SECRET is not set. Using local fallback secret.",
-    );
-  }
-  return jwt.sign({ id }, JWT_SECRET, { expiresIn: "3d" });
+  console.log("JWT_SECRET:", process.env.JWT_SECRET);
+
+  return jwt.sign(
+    { id },
+    process.env.JWT_SECRET,
+    { expiresIn: "3d" }
+  );
 };
 
 const router = express.Router();
@@ -51,12 +53,14 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   console.log(req.body);
+  console.log("JWT_SECRET:", process.env.JWT_SECRET);
   const { email, password } = req.body;
   try {
     if (!email || !password) {
       return res.status(400).json({ message: "please fill the all fields" });
     }
     const user = await User.findOne({ email });
+    console .log("USER", user);
     if (!user || !(await user.matchPassword(password))) {
       return res.status(401).json({ message: "invalid credentials" });
     }
@@ -70,7 +74,9 @@ router.post("/login", async (req, res) => {
       token,
     });
   } catch (error) {
-    res.status(500).json({ message: "server error" });
+    console.log("ERROR:", error);
+    res.status(500).json("error",error);
+    
   }
 });
 //get me

@@ -1,41 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import API from "../api/api";
+import { useDispatch, useSelector } from "react-redux";
+import { setBookings } from "../features/booking/bookingSlice";
 
 function MyBooking() {
-  const [bookings, setBookings] = useState([]);
+  const dispatch = useDispatch();
+  const bookings = useSelector((state) => state.booking.bookings);
 
   useEffect(() => {
     const fetchBookings = async () => {
       try {
         const res = await API.get("/bookings/my-bookings");
 
-        setBookings(res.data);
+        dispatch(setBookings(res.data));
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchBookings();
-  }, []);
+  }, [dispatch]);
 
   const handlePayment = async (booking) => {
-  try {
-
-    const res = await API.post(
-      "/payment/create-checkout-session",
-      {
+    try {
+      const res = await API.post("/payment/create-checkout-session", {
         booking,
-      }
-    );
+      });
 
-    window.location.href = res.data.url;
-
-  } catch (error) {
-
-    console.log(error);
-
-  }
-};
+      window.location.href = res.data.url;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <section className="bg-primary min-h-screen p-10">
@@ -130,7 +126,8 @@ function MyBooking() {
                 {!booking?.isPaid && (
                   <button
                     onClick={() => handlePayment(booking)}
-                   className="bg-sky-500 text-white px-5 py-2 rounded-md hover:bg-sky-600">
+                    className="bg-sky-500 text-white px-5 py-2 rounded-md hover:bg-sky-600"
+                  >
                     Pay Now
                   </button>
                 )}

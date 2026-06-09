@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Item from "../components/userScreenComponents/Item";
 import { sortOptions, bodyType, priceRange } from "./../data/index";
+import { useDispatch, useSelector } from "react-redux";
+import { setCars } from "../features/car/carsSlice";
 import API from "../api/api";
 
 function Listing() {
@@ -10,7 +12,9 @@ function Listing() {
     priceRange: [],
   });
   const [sort, setSort] = useState("");
-  const [cars, setCars] = useState([]);
+  //  const [cars, setCars] = useState([]);
+  const dispatch = useDispatch();
+  const cars = useSelector((state) => state.cars.cars);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(3);
   const currency = "Pkr";
@@ -31,22 +35,22 @@ function Listing() {
   };
 
   //   yha py price vala filter function chly ga
-  const matchesPrice = (car) => {
-    if (filter.priceRange.length === 0) return true;
-    return filter.priceRange.some((range) => {
-      const [min, max] = range.split("to").map((x) => Number(x.trim()));
-      return car.price.purchasePrice >= min && car.price.purchasePrice <= max;
-    });
-  };
+  // const matchesPrice = (car) => {
+  //   if (filter.priceRange.length === 0) return true;
+  //   return filter.priceRange.some((range) => {
+  //     const [min, max] = range.split("to").map((x) => Number(x.trim()));
+  //     return car.price.purchasePrice >= min && car.price.purchasePrice <= max;
+  //   });
+  // };
 
-  //filter type
+  // filter type
 
-  const matchesType = (car) => {
-    if (filter.bodyType.length === 0) return true;
-    return filter.bodyType.some(
-      (type) => type.toLowerCase() === car.specs.type.toLowerCase(),
-    );
-  };
+  // const matchesType = (car) => {
+  //   if (filter.bodyType.length === 0) return true;
+  //   return filter.bodyType.some(
+  //     (type) => type.toLowerCase() === car.specs.type.toLowerCase(),
+  //   );
+  // };
 
   //header ka searchbar use krky filtr krna
 
@@ -78,7 +82,13 @@ function Listing() {
           `/cars?page=${currentPage}&sort=${sort}&type=${type}&minPrice=${minPrice}&maxPrice=${maxPrice}&keyword=${keyword}`,
         );
 
-        setCars(res.data.cars);
+        dispatch(
+          setCars({
+            cars: res.data.cars,
+            currentPage,
+            totalPages: res.data.totalPages,
+          }),
+        );
         console.log(res.data.cars);
 
         setTotalPages(res.data.totalPages);
@@ -88,7 +98,7 @@ function Listing() {
     };
 
     fetchCars();
-  }, [currentPage, sort, filter, keyword]);
+  }, [currentPage, sort, filter, keyword, dispatch]);
 
   return (
     <section className="Section mx-auto max-w-[1300px] bg-primary px-5 py-10">

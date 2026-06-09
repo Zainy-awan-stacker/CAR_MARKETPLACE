@@ -22,13 +22,9 @@ function Header({ setShowAuth, setAuthType }) {
   const isHomePage = location.pathname === "/";
   const dispatch = useDispatch();
 
-const user = useSelector(
-  (state) => state.auth.user
-);
+  const user = useSelector((state) => state.auth.user);
 
-const isLoggedIn = useSelector(
-  (state) => state.auth.isLoggedIn
-);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   return (
     <header className={`sticky top-0 z-20 ${!isHomePage && "bg-primary"}`}>
@@ -67,9 +63,13 @@ const isLoggedIn = useSelector(
                 onClick={() => {
                   if (!showSearch) {
                     setShowSearch(true);
+                    return;
                   }
+
                   if (search.trim()) {
-                    navigate(`/listing?search=${search}`);
+                    navigate(`/listing?keyword=${search}`);
+                  } else {
+                    setShowSearch(false);
                   }
                 }}
                 className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm"
@@ -90,7 +90,6 @@ const isLoggedIn = useSelector(
               />
             </button>
 
-            {/* 🔥 AUTH BUTTONS */}
             <div className="flex gap-3">
               <div className="flex gap-3 relative">
                 {!isLoggedIn ? (

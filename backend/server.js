@@ -8,6 +8,7 @@ import bookingRoutes from "./routes/booking.route.js";
 import agencyRoutes from "./routes/agency.route.js";
 import paymentRoutes from "./routes/payment.route.js";
 dotenv.config();
+console.log("SERVER JWT:", process.env.JWT_SECRET);
 connectDb();
 const app = express();
 app.use(cors());

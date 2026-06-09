@@ -1,4 +1,3 @@
-
 import { CiLocationOn } from "react-icons/ci";
 import { useParams } from "react-router-dom";
 import { IoIosStar } from "react-icons/io";
@@ -7,93 +6,78 @@ import { MdAirlineSeatReclineExtra } from "react-icons/md";
 import { BsFuelPumpFill } from "react-icons/bs";
 import { BsSpeedometer2 } from "react-icons/bs";
 import { FaRegCalendarAlt } from "react-icons/fa";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/api";
 
 function CarDetails() {
   const { id } = useParams();
-  const[car,setCar] =useState(null);
-  const [loading,setLoading] =useState(true);
+  const [car, setCar] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [pickUpDate, setPickUpDate] = useState("");
   const navigate = useNavigate();
 
-const [dropOffDate, setDropOffDate] = useState("");
+  const [dropOffDate, setDropOffDate] = useState("");
 
-const [availability, setAvailability] = useState(null);
+  const [availability, setAvailability] = useState(null);
 
-const checkAvailability = async () => {
-
-  try {
-
-    const res = await API.post("/bookings/check", {
-      carId: car._id,
-      pickUpDate,
-      dropOffDate
-    });
-
-    setAvailability(res.data.available);
-
-  } catch (error) {
-
-    console.log(error);
-
-  }
-
-};
-
-const bookNow = async () => {
-    console.log("BOOK BUTTON CLICKED");
-
-  try {
-
-    const user = JSON.parse(localStorage.getItem("user"));
-
-    await API.post("/bookings/book", {
-      user: user.id,
-      car: car._id,
-      agency: "Rentify",
-      pickUpDate,
-      dropOffDate,
-      paymentMethod: "pay at pickup"
-    });
-
-    alert("Booking Successful");
-
-    navigate("/my-bookings");
-
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-
-
-  // jis car par click hua usko find karo
-  // const car =Details.find((item) => item.id === Number(id));
- 
-  useEffect(() => {
-
-  const fetchCar = async () => {
-
+  const checkAvailability = async () => {
     try {
-      const res = await API.get(`/cars/${id}`);
-  
-      setCar(res.data);
-      console.log(res.data);
-  
-    }
-     catch (error) {
+      const res = await API.post("/bookings/check", {
+        carId: car._id,
+        pickUpDate,
+        dropOffDate,
+      });
+
+      setAvailability(res.data.available);
+    } catch (error) {
       console.log(error);
-    }finally{
-      setLoading(false);
     }
   };
 
-  fetchCar();
+  const bookNow = async () => {
+    console.log("BOOK BUTTON CLICKED");
 
-}, [id]);
- if (loading) {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      await API.post("/bookings/book", {
+        user: user.id,
+        car: car._id,
+        agency: "Rentify",
+        pickUpDate,
+        dropOffDate,
+        paymentMethod: "pay at pickup",
+      });
+
+      alert("Booking Successful");
+
+      navigate("/my-bookings");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // jis car par click hua usko find karo
+  // const car =Details.find((item) => item.id === Number(id));
+
+  useEffect(() => {
+    const fetchCar = async () => {
+      try {
+        const res = await API.get(`/cars/${id}`);
+
+        setCar(res.data);
+        console.log(res.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCar();
+  }, [id]);
+  if (loading) {
     return <h2 className="text-center text-2xl">Loading...</h2>;
   }
   // agar car na mile
@@ -200,49 +184,23 @@ const bookNow = async () => {
               />
             </div>
             <button
-
-  onClick={
-    availability
-      ? bookNow
-      : checkAvailability
-  }
-
-  className={`p-5 text-white capitalize font-bold flex items-center rounded-md ${
-    availability
-      ? "bg-green-500"
-      : "bg-sky-500"
-  }`}
->
-
-  {
-    availability
-      ? "Book Now"
-      : "Check Dates"
-  }
-
-</button>
+              onClick={availability ? bookNow : checkAvailability}
+              className={`p-5 text-white capitalize font-bold flex items-center rounded-md ${
+                availability ? "bg-green-500" : "bg-sky-500"
+              }`}
+            >
+              {availability ? "Book Now" : "Check Dates"}
+            </button>
           </div>
-          {
-  availability !== null && (
-
-    <div
-      className={`mt-4 p-3 rounded text-white font-bold ${
-        availability
-          ? "bg-green-500"
-          : "bg-red-500"
-      }`}
-    >
-
-      {
-        availability
-          ? "Car is Available"
-          : "Car is Not Available"
-      }
-
-    </div>
-
-  )
-}
+          {availability !== null && (
+            <div
+              className={`mt-4 p-3 rounded text-white font-bold ${
+                availability ? "bg-green-500" : "bg-red-500"
+              }`}
+            >
+              {availability ? "Car is Available" : "Car is Not Available"}
+            </div>
+          )}
           {/* buying contact form */}
           <div className="bg-white shadow-md rounded-2xl p-5 w-[320px]">
             <h2 className="text-lg font-extrabold mb-4">For Buying Contact</h2>
