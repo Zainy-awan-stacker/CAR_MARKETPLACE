@@ -17,6 +17,7 @@ backend/dist
 *.env
 frontend/.env
 backend/.env
+.history/
 
 # Logs
 logs

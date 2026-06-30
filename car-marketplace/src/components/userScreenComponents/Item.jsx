@@ -5,40 +5,44 @@ import { MdAirlineSeatReclineExtra } from "react-icons/md";
 import { BsFuelPumpFill } from "react-icons/bs";
 import { BsSpeedometer2 } from "react-icons/bs";
 
+
 function Item({car}) {
     const navigate =useNavigate()
 
+
+
+
   return (
-     <div className={`rounded-xl shadow p-4 ${car.bgColor}`} onClick={() =>{navigate(`/listing/ ${car.id}`)}} >
+     <div className={`rounded-xl h-fit shadow p-4 ${car.bgColor}`} onClick={() =>{navigate(`/listing/${car._id}`)}} >
       <h3 className="font-semibold">{car.name}</h3>
       <div className='inside-edit flex justify-between items-center py-2 gap-5'>
-        <div><h5>{car.type}</h5></div>
-        <div><p  className="text-sky-400 font-bold">PKR{car.purchasePrice} |{car.rentPerDay}/day</p></div>
+        <div><h5>{car.specs?.type}</h5></div>
+        <div><p  className="text-sky-400 font-bold">PKR{car.price?.purchasePrice} |{car.price?.rentPerDay}/day</p></div>
       </div>
       <img
-        src={car.image}
+        src={car.images?.main}
         alt={car.name}
         className="h-40 w-full object-contain mb-3"
       />
       <div className='car-feature flex justify-between'>
         <div className='flex flex-col gap-1 items-center'>
         <GiGearStickPattern />
-        {car.transmission}
+        {car.specs?.transmission}
         </div>
           |
         <div className='flex flex-col gap-1 items-center'>
          <MdAirlineSeatReclineExtra />
-         {car.seats}
+         {car.specs?.seats}
         </div>
           |
         <div className='flex flex-col gap-1 items-center'>
          <BsFuelPumpFill />
-         {car.fuel}
+         {car.specs?.fuel}
         </div>
           |
         <div className='flex flex-col gap-1 items-center'>
          <BsSpeedometer2 />
-         {car.mileage}
+         {car.specs?.mileage}
         </div>
       </div>
       

@@ -1,8 +1,25 @@
 import React from "react";
 import { CiLocationOn } from "react-icons/ci";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { CiSearch } from "react-icons/ci";
 
 function Hero() {
+  const [destination, setDestination] = useState("");
+  const [pickupDate, setPickUpDate] = useState("");
+  const [dropoffDate, setDropOffDate] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    // Handle form submission logic 
+    navigate(
+      `/listing?destination=${destination}&pickUp=${pickupDate}&dropOff=${dropoffDate}`
+    )
+    
+  };
+
   return (
     <section className="bg-primary">
       <div className="max-padd-container ">
@@ -28,8 +45,10 @@ function Hero() {
                     list="destinations"
                     id="destinationInput"
                     type="text"
+                    value={destination}
                     className=" rounded border border-gray-200 px-3 py-1.5 mt-1.5 text-sm outline-none capitalize"
                     placeholder="Type here"
+                    onChange={(e) => setDestination(e.target.value)}
                     required
                   />
 
@@ -44,6 +63,8 @@ function Hero() {
                     id="pickUp"
                     type="date"
                     className=" rounded border border-gray-200 px-3 py-1.5 mt-1.5 text-sm outline-none"
+                    value={pickupDate}
+                    onChange={(e) => setPickUpDate(e.target.value)}
                   />
                 </div>
 
@@ -56,28 +77,17 @@ function Hero() {
                     id="dropOff"
                     type="date"
                     className=" rounded border border-gray-200 px-3 py-1.5 mt-1.5 text-sm outline-none"
+                    value={dropoffDate}
+                    onChange={(e) => setDropOffDate(e.target.value)}
                   />
                 </div>
 
 
-                <button type="submit" className="flex items-center justify-center gap-1 rounded-full bg-sky-500 py-3 px-4 text-white my-auto cursor-pointer max-md:w-full max-md:py-1">
-                  <svg
-                    className="w-4 h-4 text-white"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeWidth="2"
-                      d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
-                    />
-                  </svg>
-                  <span>Search</span>
+                <button type="submit" className="flex items-center justify-center gap-1 rounded-full bg-sky-500 py-3 px-4 text-white my-auto cursor-pointer max-md:w-full max-md:py-1"
+                onClick={handleSearch}>
+                  
+                  <span className="flex gap-2 items-center"><CiSearch/>Search</span>
+                  
                 </button>
               </form>
             </div>
