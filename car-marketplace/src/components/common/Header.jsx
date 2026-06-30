@@ -3,23 +3,22 @@ import { FaUserCircle } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import { FaCarSide } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
-import { useLocation } from "react-router-dom";
 import { RiLoginCircleFill } from "react-icons/ri";
 import { FaRegUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../features/auth/authSlice";
+import AgencyModal from "../userScreenComponents/AgencyModal";
 
 function Header({ setShowAuth, setAuthType }) {
   const [menuOpened, setMenuOpened] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [search, setSearch] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showAgencyModal,setShowAgencyModal] = useState(false);
   const navigate = useNavigate();
 
-  const location = useLocation();
-  const isHomePage = location.pathname === "/";
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.auth.user);
@@ -27,9 +26,9 @@ function Header({ setShowAuth, setAuthType }) {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   return (
-    <header className={`sticky top-0 z-20 ${!isHomePage && "bg-primary"}`}>
-      <div className="main-div px-10 bg-primary">
-        <div className="flex justify-between items-center">
+    <header className="sticky top-0 z-20 bg-white shadow-sm">
+      <div className="main-div px-10 py-2">
+        <div className="flex justify-between items-center gap-4">
           {/* LOGO */}
           <div className="relative">
             <img src="/images/cars.png" alt="car" className="w-20" />
@@ -90,7 +89,30 @@ function Header({ setShowAuth, setAuthType }) {
               />
             </button>
 
-            <div className="flex gap-3">
+            <div className="flex gap-3 items-center">
+              {
+  isLoggedIn &&
+  user?.role !== "agency" && (
+    <button
+      onClick={() => setShowAgencyModal(true)}
+      className="bg-sky-500 text-white px-4 py-2 rounded-full"
+    >
+      Agency
+    </button>
+  )
+}
+
+{
+  isLoggedIn &&
+  user?.role === "agency" && (
+    <button
+      onClick={() => navigate("/owner")}
+      className="bg-green-500 text-white px-4 py-2 rounded-full"
+    >
+      Dashboard
+    </button>
+  )
+}
               <div className="flex gap-3 relative">
                 {!isLoggedIn ? (
                   <button
@@ -176,6 +198,13 @@ function Header({ setShowAuth, setAuthType }) {
           </div>
         </div>
       </div>
+      {
+  showAgencyModal && (
+    <AgencyModal
+      closeModal={() => setShowAgencyModal(false)}
+    />
+  )
+}
     </header>
   );
 }

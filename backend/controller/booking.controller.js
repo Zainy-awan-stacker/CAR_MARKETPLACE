@@ -1,4 +1,7 @@
+import mongoose from "mongoose";
 import Booking from "../model/booking.model.js";
+import Car from "../model/car.model.js";
+import Agency from "../model/agency.model.js";
 
 // CHECK CAR AVAILABILITY
 export const checkAvailability = async (req, res) => {
@@ -15,20 +18,16 @@ export const checkAvailability = async (req, res) => {
     const pickUp = new Date(pickUpDate);
     const dropOff = new Date(dropOffDate);
 
-    // same dates par booking check
     const existingBooking = await Booking.findOne({
       car: carId,
-
       pickUpDate: {
         $lte: dropOff,
       },
-
       dropOffDate: {
         $gte: pickUp,
       },
     });
 
-    // agar booking mil gayi
     if (existingBooking) {
       return res.json({
         available: false,
@@ -36,15 +35,13 @@ export const checkAvailability = async (req, res) => {
       });
     }
 
-    // agar booking nahi mili
     res.json({
       available: true,
       message: "Car Available",
     });
   } catch (error) {
-    console.log("Availability check error:", error);
     res.status(500).json({
-      message: error.message || "Error checking availability",
+      message: error.message,
     });
   }
 };
@@ -52,43 +49,42 @@ export const checkAvailability = async (req, res) => {
 // CREATE BOOKING
 export const createBooking = async (req, res) => {
   try {
-    const { pickUpDate, dropOffDate, user, car } = req.body;
+    const { pickUpDate, dropOffDate, user, car, agency } = req.body;
 
-    // Validate required fields
     if (!pickUpDate || !dropOffDate || !user || !car) {
       return res.status(400).json({
-        message: "Missing required fields: pickUpDate, dropOffDate, user, car",
+        message: "Missing required fields",
       });
     }
 
-    // Convert string dates to Date objects
-    const pickUp = new Date(pickUpDate);
-    const dropOff = new Date(dropOffDate);
+    const carData = await Car.findById(car);
 
-    // Validate dates
-    if (isNaN(pickUp) || isNaN(dropOff)) {
-      return res.status(400).json({
-        message: "Invalid date format",
+    if (!carData) {
+      return res.status(404).json({
+        message: "Car not found",
       });
     }
 
-    if (pickUp >= dropOff) {
-      return res.status(400).json({
-        message: "Drop-off date must be after pick-up date",
-      });
-    }
+    const start = new Date(pickUpDate);
+    const end = new Date(dropOffDate);
+
+    const days =
+      Math.ceil((end - start) / (1000 * 60 * 60 * 24)) || 1;
+
+    const amount =
+      days * carData.price.rentPerDay;
 
     const booking = await Booking.create({
       ...req.body,
-      pickUpDate: pickUp,
-      dropOffDate: dropOff,
+      amount,
+      pickUpDate: start,
+      dropOffDate: end,
     });
 
     res.status(201).json(booking);
   } catch (error) {
-    console.log("Booking error:", error);
     res.status(500).json({
-      message: error.message || "Error creating booking",
+      message: error.message,
     });
   }
 };
@@ -96,29 +92,57 @@ export const createBooking = async (req, res) => {
 // GET ALL BOOKINGS
 export const getBookings = async (req, res) => {
   try {
-    const bookings = await Booking.find().populate("car").populate("user");
+    const bookings = await Booking.find()
+      .populate("car")
+      .populate("user");
 
     res.json(bookings);
   } catch (error) {
-    console.log("Get bookings error:", error);
     res.status(500).json({
-      message: error.message || "Error fetching bookings",
+      message: error.message,
     });
   }
 };
 
-// export const getBookings = async(req,res)=>{
+// DASHBOARD DATA
+// export const getDashboardStats =
+// async (req,res)=>{
 
-// try{
+//   try{
 
-// const bookings = await Booking.find();
+//     const bookings =
+//     await Booking.find()
+//     .populate("car");
 
-// res.json(bookings);
+//     const totalBookings =
+//     bookings.length;
 
-// }catch(err){
+//     const totalRevenue =
+//     bookings
+//       .filter(
+//         booking => booking.isPaid
+//       )
+//       .reduce(
+//         (total,booking)=>
 
-// res.status(500).json(err);
+//           total +
+//           booking.car.price.rentPerDay,
 
-// }
+//         0
+//       );
+
+//     res.json({
+//       totalBookings,
+//       totalRevenue,
+//       bookings
+//     });
+
+//   }catch(error){
+
+//     res.status(500).json({
+//       message:error.message
+//     });
+
+//   }
 
 // }

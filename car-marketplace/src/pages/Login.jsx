@@ -34,11 +34,12 @@ function Login({ closeModal, setAuthType }) {
       localStorage.setItem("user", JSON.stringify(res.data.user));
       localStorage.setItem("token", res.data.token);
       dispatch(loginSuccess({
-        user:{
-          id: res.data.id,
-          username: res.data.username,
-          email: res.data.email,
-        },
+        // user:{
+        //   id: res.data.id,
+        //   user: res.data.user,
+        //   email: res.data.email,
+        // },
+          user: res.data.user,
         token: res.data.token,
       }));
 

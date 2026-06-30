@@ -1,25 +1,37 @@
+import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import API from "../api/api";
+
 export default function PaymentSuccess() {
 
-   return (
+  const [searchParams] = useSearchParams();
 
-      <div className="h-screen flex justify-center items-center bg-gray-100">
+  useEffect(() => {
 
-         <div className="bg-white p-10 rounded-3xl shadow-xl text-center">
+    const bookingId =
+      searchParams.get("bookingId");
 
-            <h1 className="text-4xl font-bold text-green-500 mb-4">
+    if (bookingId) {
 
-               Payment Successful 🎉
+      API.put("/payment/mark-paid", {
+        bookingId,
+      });
 
-            </h1>
+    }
 
-            <p className="text-gray-600">
+  }, []);
 
-               Your booking payment has been completed.
+  return (
+    <div className="h-screen flex justify-center items-center">
 
-            </p>
+      <div className="bg-white p-10 rounded-3xl shadow-xl">
 
-         </div>
+        <h1 className="text-4xl font-bold text-green-500">
+          Payment Successful 🎉
+        </h1>
 
       </div>
-   );
+
+    </div>
+  );
 }

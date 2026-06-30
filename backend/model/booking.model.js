@@ -15,7 +15,8 @@ const bookingSchema = new mongoose.Schema({
   },
 
   agency: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Agency",
     required: true
   },
 
@@ -44,6 +45,10 @@ const bookingSchema = new mongoose.Schema({
   isPaid: {
     type: Boolean,
     default: false
+  },
+  amount: {
+    type: Number,
+    default: 0
   }
 
 }, { timestamps: true });

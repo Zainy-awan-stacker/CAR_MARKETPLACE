@@ -1,4 +1,5 @@
 import stripe from "../config/stripe.js";
+import Booking from "../model/booking.model.js";
 
 export const createCheckoutSession = async (req, res) => {
   try {
@@ -42,7 +43,7 @@ export const createCheckoutSession = async (req, res) => {
       mode: "payment",
 
       success_url:
-        `${process.env.CLIENT_URL}/payment-success`,
+        `${process.env.CLIENT_URL}/payment-success?bookingId=${booking._id}`,
 
       cancel_url:
         `${process.env.CLIENT_URL}/payment-cancel`,
@@ -63,3 +64,32 @@ export const createCheckoutSession = async (req, res) => {
 
   }
 };
+
+export const markBookingPaid = async (req,res)=>{
+  try{
+
+    const { bookingId } = req.body;
+
+    const booking =
+    await Booking.findByIdAndUpdate(
+      bookingId,
+      {
+        isPaid:true,
+        status:"completed"
+      },
+      {
+        new:true
+      }
+    );
+
+    res.json(booking);
+
+  }catch(error){
+
+    res.status(500).json({
+      message:error.message
+    });
+
+  }
+};
+
