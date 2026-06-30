@@ -7,6 +7,7 @@ import carRoutes from "./routes/car.route.js";
 import bookingRoutes from "./routes/booking.route.js";
 import agencyRoutes from "./routes/agency.route.js";
 import paymentRoutes from "./routes/payment.route.js";
+import dashboardRoutes from "./routes/dashboard.route.js";
 dotenv.config();
 console.log("SERVER JWT:", process.env.JWT_SECRET);
 connectDb();
@@ -19,6 +20,7 @@ app.use("/api/cars", carRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/agency", agencyRoutes);
 app.use("/api/payment", paymentRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 // api to create checkout session
 

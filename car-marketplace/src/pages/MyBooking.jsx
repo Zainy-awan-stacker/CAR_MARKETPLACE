@@ -25,6 +25,7 @@ function MyBooking() {
     try {
       const res = await API.post("/payment/create-checkout-session", {
         booking,
+        bookingId: booking._id,
       });
 
       window.location.href = res.data.url;

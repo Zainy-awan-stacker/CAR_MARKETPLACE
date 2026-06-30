@@ -21,7 +21,7 @@ const agencySchema = new mongoose.Schema({
         type:String,
         required:true},
         owner:{
-            type:String,
+            type:mongoose.Schema.Types.ObjectId,
             required:true,
             ref:"User"
         },

@@ -40,11 +40,12 @@ function CarDetails() {
 
     try {
       const user = JSON.parse(localStorage.getItem("user"));
+      const agencyId = car?.agency?._id || car?.agency;
 
       await API.post("/bookings/book", {
-        user: user.id,
+        user: user?.id || user?._id,
         car: car._id,
-        agency: "Rentify",
+        agency: agencyId,
         pickUpDate,
         dropOffDate,
         paymentMethod: "pay at pickup",
@@ -55,6 +56,7 @@ function CarDetails() {
       navigate("/my-bookings");
     } catch (error) {
       console.log(error);
+      alert(error.response?.data?.message || error.message || "Booking failed");
     }
   };
 

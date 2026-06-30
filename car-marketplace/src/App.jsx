@@ -18,6 +18,7 @@ import OwnerLayout from "./pages/owner/OwnerLayout";
 import Item from "./components/userScreenComponents/Item";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancel from "./pages/PaymentCancel";
+import RegisterAgency from "./pages/RegisterAgency";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -60,6 +61,7 @@ function App() {
         <Route path="/my-bookings" element={<MyBooking />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
         <Route path="/payment-cancel" element={<PaymentCancel />} />
+        <Route path="/register-agency" element={<RegisterAgency />} />
         {/* OWNER */}
         <Route path="/owner" element={<OwnerLayout />}>
           <Route index element={<Dashboard />} />

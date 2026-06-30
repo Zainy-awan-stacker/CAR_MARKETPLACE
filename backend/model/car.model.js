@@ -88,6 +88,11 @@ const carSchema = new mongoose.Schema(
         },
       ],
     },
+    agency: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Agency",
+      required: true,
+    },
   },
   { timestamps: true },
 );
